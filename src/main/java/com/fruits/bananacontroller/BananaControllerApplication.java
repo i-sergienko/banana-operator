@@ -37,7 +37,7 @@ public class BananaControllerApplication {
     @Bean
     public Operator operator(
             KubernetesClient client,
-            List<ResourceController> controllers
+            List<ResourceController<?>> controllers
     ) {
         Operator operator = new Operator(client, DefaultConfigurationService.instance());
         controllers.forEach(operator::register);
