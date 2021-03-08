@@ -1,6 +1,7 @@
 package com.fruits.bananacontroller.controller;
 
 import com.fruits.bananacontroller.resource.Banana;
+import com.fruits.bananacontroller.resource.BananaStatus;
 import io.javaoperatorsdk.operator.api.Context;
 import io.javaoperatorsdk.operator.api.DeleteControl;
 import io.javaoperatorsdk.operator.api.ResourceController;
@@ -43,7 +44,19 @@ public class BananaController implements ResourceController<Banana> {
      */
     @Override
     public UpdateControl<Banana> createOrUpdateResource(Banana resource, Context<Banana> context) {
-        return UpdateControl.updateStatusSubResource(resource);
+        if (resource.getStatus() == null) {
+            // Status is empty -> this is a new Banana.
+            // Simulate the banana being prepared for eating and update the Status subresource.
+            BananaStatus status = new BananaStatus();
+            status.setReadyToBeEaten(true);
+            resource.setStatus(status);
+
+            return UpdateControl.updateStatusSubResource(resource);
+        } else {
+            // Status is not empty -> assume the banana was already initialized.
+            // No action necessary.
+            return UpdateControl.noUpdate();
+        }
     }
 
     /**
