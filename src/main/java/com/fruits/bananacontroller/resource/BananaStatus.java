@@ -5,13 +5,13 @@ package com.fruits.bananacontroller.resource;
  * Represents the actual state of the resource, as recorded by the controller.
  */
 public class BananaStatus {
-    private Boolean readyToBeEaten;
+    private String color;
 
-    public Boolean getReadyToBeEaten() {
-        return readyToBeEaten;
+    public String getColor() {
+        return color;
     }
 
-    public void setReadyToBeEaten(Boolean readyToBeEaten) {
-        this.readyToBeEaten = readyToBeEaten;
+    public void setColor(String color) {
+        this.color = color;
     }
 }

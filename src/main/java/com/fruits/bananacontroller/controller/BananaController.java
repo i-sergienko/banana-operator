@@ -6,6 +6,8 @@ import io.javaoperatorsdk.operator.api.Context;
 import io.javaoperatorsdk.operator.api.DeleteControl;
 import io.javaoperatorsdk.operator.api.ResourceController;
 import io.javaoperatorsdk.operator.api.UpdateControl;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
 
 /**
@@ -23,6 +25,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class BananaController implements ResourceController<Banana> {
+    private static final Logger log = LoggerFactory.getLogger(BananaController.class);
 
     /**
      * Reacts to a {@code Banana} being created or updated.
@@ -43,19 +46,22 @@ public class BananaController implements ResourceController<Banana> {
      */
     @Override
     public UpdateControl<Banana> createOrUpdateResource(Banana resource, Context<Banana> context) {
-        if (resource.getStatus() == null) {
-            // Status is empty -> this is a new Banana.
-            // Simulate the banana being prepared for eating and update the Status subresource.
+        if (resource.getStatus() == null || !resource.getSpec().getColor().equals(resource.getStatus().getColor())) {
+            // Status is empty, or actual color is different from the desired color.
+            // Simulate the banana being painted and update the Status subresource.
             BananaStatus status = new BananaStatus();
-            status.setReadyToBeEaten(true);
+            status.setColor(resource.getSpec().getColor());
             resource.setStatus(status);
             // Pretend that preparing the Banana takes 5 seconds
-            simulateWork(5000);
+            paintBanana(resource);
 
             return UpdateControl.updateStatusSubResource(resource);
         } else {
-            // Status is not empty -> assume the banana was already initialized.
-            // No action necessary.
+            log.info(String.format(
+                    "Banana %s is already colored %s. Nothing to do.",
+                    resource.getMetadata().getName(),
+                    resource.getSpec().getColor())
+            );
             return UpdateControl.noUpdate();
         }
     }
@@ -76,9 +82,14 @@ public class BananaController implements ResourceController<Banana> {
         return DeleteControl.DEFAULT_DELETE;
     }
 
-    private void simulateWork(long millis) {
+    private void paintBanana(Banana banana) {
         try {
-            Thread.sleep(millis);
+            log.info(String.format(
+                    "Banana %s is being painted %s",
+                    banana.getMetadata().getName(),
+                    banana.getSpec().getColor())
+            );
+            Thread.sleep(5000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
