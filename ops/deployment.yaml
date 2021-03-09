@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: banana-controller
+  namespace: banana-operator
+  labels:
+    app: banana-controller
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: banana-controller
+  strategy:
+    type: Recreate # Assure that no more than 1 controller is active at all times
+  template:
+    metadata:
+      labels:
+        app: banana-controller
+    spec:
+      containers:
+        - image: banana-controller:latest
+          name: banana-controller
+          env:
+            - name: JAVA_OPTS
+              value: "-Xmx75m"
+          resources:
+            requests:
+              memory: 50Mi
+            limits:
+              memory: 80Mi
+          startupProbe:
+            httpGet:
+              port: 8080
+              path: /actuator/health
+          livenessProbe:
+            httpGet:
+              port: 8080
+              path: /actuator/health
