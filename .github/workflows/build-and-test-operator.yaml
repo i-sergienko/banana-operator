@@ -5,14 +5,13 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - uses: engineerd/setup-kind@v0.5.0
       - uses: actions/setup-java@v1
         with:
           java-version: '14'
           java-package: jdk
           architecture: x64
+      - run: chmod +x ops/scripts/launch-kind.sh; ./ops/scripts/launch-kind.sh
       - run: kubectl apply -f ops/banana-crd.yaml
-      - run: chmod +x ops/scripts/launch-local-registry.sh; ./ops/scripts/launch-local-registry.sh
       - run: chmod +x mvnw
       - run: ./mvnw dependency:resolve
       - run: ./mvnw package
