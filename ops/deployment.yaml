@@ -18,7 +18,7 @@ spec:
         app: banana-controller
     spec:
       containers:
-        - image: banana-controller:latest
+        - image: banana-operator:latest
           name: banana-controller
           env:
             - name: JAVA_OPTS
