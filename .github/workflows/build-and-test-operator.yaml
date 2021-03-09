@@ -1,4 +1,4 @@
-name: learn-github-actions
+name: build-and-test-operator
 on: [push]
 jobs:
   build-and-test-operator:
