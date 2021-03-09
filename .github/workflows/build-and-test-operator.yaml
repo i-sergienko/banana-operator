@@ -11,10 +11,10 @@ jobs:
           java-version: '14'
           java-package: jdk
           architecture: x64
+      - run: kubectl apply -f ops/banana-crd.yaml
       - run: chmod +x mvnw; ./mvnw package
       - run: docker build -t banana-operator:latest .
       - run: |
-          kubectl apply -f ops/banana-crd.yaml
           kubectl apply -f ops/namespace.yaml
           kubectl apply -f ops/deployment.yaml
           sleep 5
