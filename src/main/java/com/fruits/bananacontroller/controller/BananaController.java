@@ -5,6 +5,7 @@ import com.fruits.bananacontroller.resource.BananaStatus;
 import io.javaoperatorsdk.operator.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 /**
  * This is the heart of the application - BananaController will react to changes made to Banana resources.
@@ -19,6 +20,7 @@ import org.slf4j.LoggerFactory;
  * It must be idempotent because Controller apps can only guarantee "at least once" processing - each event is guaranteed
  * to be processed, but one event might be processed multiple times (e.g. if the controller crashes during processing).
  */
+@Component
 @Controller
 public class BananaController implements ResourceController<Banana> {
     private static final Logger log = LoggerFactory.getLogger(BananaController.class);
