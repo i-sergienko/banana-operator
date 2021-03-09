@@ -44,15 +44,15 @@ class BananaControllerApplicationTests {
         assertEquals(1, bananas.size());
         assertEquals(banana.getMetadata().getName(), bananas.get(0).getMetadata().getName());
         assertEquals(banana.getSpec().getColor(), bananas.get(0).getSpec().getColor());
-        // Status is null - the operator hasn't run yet
-        assertNull(bananas.get(0).getStatus());
+        // Color in the 'status' subresource is null - the operator hasn't run yet
+        assertNull(bananas.get(0).getStatus().getColor());
 
         // Wait for the banana to be painted
         safeWait(4000);
 
         bananas = listBananas("default");
         assertEquals(1, bananas.size());
-        assertNotNull(bananas.get(0).getStatus());
+        assertNotNull(bananas.get(0).getStatus().getColor());
         assertEquals(banana.getSpec().getColor(), bananas.get(0).getStatus().getColor());
 
         // Delete the banana
