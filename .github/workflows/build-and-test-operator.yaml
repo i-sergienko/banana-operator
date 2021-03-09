@@ -11,3 +11,4 @@ jobs:
           java-package: jdk
           architecture: x64
       - run: chmod +x mvnw; ./mvnw package
+      - run: docker build -t banana-operator:latest .
