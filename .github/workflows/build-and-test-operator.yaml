@@ -12,6 +12,7 @@ jobs:
           java-package: jdk
           architecture: x64
       - run: kubectl apply -f ops/banana-crd.yaml
+      - run: chmod +x ops/scripts/launch-local-registry.sh; ./ops/scripts/launch-local-registry.sh
       - run: chmod +x mvnw
       - run: ./mvnw dependency:resolve
       - run: ./mvnw package
