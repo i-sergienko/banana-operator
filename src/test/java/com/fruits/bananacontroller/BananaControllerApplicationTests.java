@@ -76,6 +76,7 @@ class BananaControllerApplicationTests {
                 .withGroup("fruits.com")
                 .withVersion("v1")
                 .withKind("Banana")
+                .withPlural("bananas")
                 .withScope("Namespaced")
                 .build();
     }
