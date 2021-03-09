@@ -12,7 +12,9 @@ jobs:
           java-package: jdk
           architecture: x64
       - run: kubectl apply -f ops/banana-crd.yaml
-      - run: chmod +x mvnw; ./mvnw package
+      - run: chmod +x mvnw
+      - run: ./mvnw dependency:resolve
+      - run: ./mvnw package
       - run: docker build -t banana-operator:latest .
       - run: |
           kubectl apply -f ops/namespace.yaml
