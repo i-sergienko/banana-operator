@@ -48,7 +48,7 @@ public class BananaController implements ResourceController<Banana> {
             BananaStatus status = new BananaStatus();
             status.setColor(resource.getSpec().getColor());
             resource.setStatus(status);
-            // Pretend that preparing the Banana takes 5 seconds
+            // Pretend that painting the Banana takes 3 seconds
             paintBanana(resource);
 
             return UpdateControl.updateStatusSubResource(resource);
@@ -85,7 +85,7 @@ public class BananaController implements ResourceController<Banana> {
                     banana.getMetadata().getName(),
                     banana.getSpec().getColor())
             );
-            Thread.sleep(5000);
+            Thread.sleep(3000);
         } catch (InterruptedException e) {
             e.printStackTrace();
         }
