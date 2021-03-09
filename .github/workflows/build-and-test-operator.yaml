@@ -16,8 +16,5 @@ jobs:
       - run: ./mvnw dependency:resolve
       - run: ./mvnw package
       - run: docker build -t banana-operator:latest .
-      - run: |
-          kubectl apply -f ops/namespace.yaml
-          kubectl apply -f ops/deployment.yaml
-          sleep 5
-      - run: kubectl get deployment -n banana-operator
+      - run: docker tag banana-operator:latest localhost:5000/banana-operator:latest
+      - run: docker push localhost:5000/banana-operator:latest

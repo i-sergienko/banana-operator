@@ -18,7 +18,7 @@ spec:
         app: banana-controller
     spec:
       containers:
-        - image: banana-operator:latest
+        - image: localhost:5000/banana-operator:latest
           name: banana-controller
           env:
             - name: JAVA_OPTS
