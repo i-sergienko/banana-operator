@@ -10,4 +10,4 @@ jobs:
           java-version: '11'
           java-package: jdk
           architecture: x64
-      - run: ./mvnw package
+      - run: chmod +x mvnw; ./mvnw package
