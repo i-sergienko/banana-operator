@@ -17,6 +17,8 @@ spec:
       labels:
         app: banana-controller
     spec:
+      # Use the ServiceAccount from rbac.yaml
+      serviceAccountName: banana-operator
       containers:
         - image: localhost:5000/banana-operator:latest
           name: banana-controller

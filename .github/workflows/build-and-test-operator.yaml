@@ -18,3 +18,5 @@ jobs:
       - run: docker build -t banana-operator:latest .
       - run: docker tag banana-operator:latest localhost:5000/banana-operator:latest
       - run: docker push localhost:5000/banana-operator:latest
+      - run: chmod +x ops/scripts/deploy-operator.sh
+      - run: ./ops/scripts/deploy-operator.sh
