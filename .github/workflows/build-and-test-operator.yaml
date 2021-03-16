@@ -10,13 +10,8 @@ jobs:
           java-version: '14'
           java-package: jdk
           architecture: x64
-      - run: chmod +x ops/scripts/launch-kind.sh; ./ops/scripts/launch-kind.sh
+      - run: kind create cluster
       - run: kubectl apply -f ops/banana-crd.yaml
       - run: chmod +x mvnw
       - run: ./mvnw dependency:resolve
       - run: ./mvnw package
-      - run: docker build -t banana-operator:latest .
-      - run: docker tag banana-operator:latest localhost:5000/banana-operator:latest
-      - run: docker push localhost:5000/banana-operator:latest
-      - run: chmod +x ops/scripts/deploy-operator.sh
-      - run: ./ops/scripts/deploy-operator.sh
